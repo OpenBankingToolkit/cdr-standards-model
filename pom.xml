@@ -32,7 +32,7 @@
     <description>
         A Java Consumer Data Right Model, generated from the swagger, to help implementing the Consumer Data Right Standard: https://consumerdatastandardsaustralia.github.io/standards
     </description>
-    <url>https://github.com/OpenBankingToolkit/cdr-standards-datamodel</url>
+    <url>https://github.com/OpenBankingToolkit/cdr-standards-model</url>
 
     <parent>
         <groupId>com.forgerock.openbanking</groupId>
@@ -169,9 +169,9 @@
     </build>
 
     <scm>
-        <connection>scm:git:https://github.com/OpenBankingToolkit/openbanking-uk-datamodel.git</connection>
-        <developerConnection>scm:git:https://github.com/OpenBankingToolkit/openbanking-uk-datamodel.git</developerConnection>
-        <url>https://github.com/OpenBankingToolkit/openbanking-uk-datamodel.git</url>
+        <connection>scm:git:https://github.com/OpenBankingToolkit/cdr-standards-model.git</connection>
+        <developerConnection>scm:git:https://github.com/OpenBankingToolkit/cdr-standards-model.git</developerConnection>
+        <url>https://github.com/OpenBankingToolkit/cdr-standards-model.git</url>
         <tag>HEAD</tag>
     </scm>
 
