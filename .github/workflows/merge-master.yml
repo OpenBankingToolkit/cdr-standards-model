@@ -36,7 +36,7 @@ jobs:
           owner: openbanking-toolkit
           repo: OpenBankingToolKit
 
-          package-name: openbanking-tpp
+          package-name: cdr-standards-model
           package-description: Java CDR Data Model
           package-url: https://github.com/OpenBankingToolkit/cdr-standards-model
           package-license: Apache-2.0

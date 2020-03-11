@@ -9,7 +9,7 @@
 
 
 # Consumer Data Right Standards Model
-A Java CDR Data Model, generated from the swagger, to help implementing the Open Banking Consumer Data Standard: https://consumerdatastandardsaustralia.github.io/standards  .
+A Java Consumer Data Right Standards Model, generated from the swagger, to help implementing the Consumer Data Right Standards: https://consumerdatastandardsaustralia.github.io/standards  .
 This project is compiled with JDK 11.
 
 ## Usage
