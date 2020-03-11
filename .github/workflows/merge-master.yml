@@ -45,7 +45,7 @@ jobs:
         uses: benjefferies/branch-protection-bot@master
         if: always()
         with:
-          access-token: ${{ secrets.GH_ACCESS_TOKEN }}
+          access-token: ${{ github.token }}
           enforce_admins: false
 
       - name: Setup git
@@ -67,11 +67,11 @@ jobs:
           git-release-bot-name: "fropenbanking"
           git-release-bot-email: "obst@forgerock.com"
 
-          access-token: ${{ secrets.GITHUB_TOKEN }}
+          access-token: ${{ github.token }}
 
       - name: Enable "include administrators" branch protection
         uses: benjefferies/branch-protection-bot@master
         if: always()
         with:
-          access-token: ${{ secrets.GH_ACCESS_TOKEN }}
+          access-token: ${{ github.token }}
           enforce_admins: true
