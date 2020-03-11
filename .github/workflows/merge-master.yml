@@ -45,7 +45,7 @@ jobs:
         uses: benjefferies/branch-protection-bot@master
         if: always()
         with:
-          access-token: ${{ secrets.GITHUB_TOKEN }}
+          access-token: ${{ secrets.GH_ACCESS_TOKEN }}
           enforce_admins: false
 
       - name: Setup git
@@ -73,5 +73,5 @@ jobs:
         uses: benjefferies/branch-protection-bot@master
         if: always()
         with:
-          access-token: ${{ secrets.GITHUB_TOKEN }}
+          access-token: ${{ secrets.GH_ACCESS_TOKEN }}
           enforce_admins: true
