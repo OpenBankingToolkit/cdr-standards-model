@@ -38,7 +38,7 @@ jobs:
 
           package-name: openbanking-tpp
           package-description: Java CDR Data Model
-          package-url: https://github.com/OpenBankingToolkit/openbanking-cdr-datamodel
+          package-url: https://github.com/OpenBankingToolkit/cdr-standards-model
           package-license: Apache-2.0
 
       - name: Temporarily disable "include administrators" branch protection
