@@ -29,7 +29,8 @@ jobs:
           enforce_admins: false
 
       - name: Publish to github package maven
-        run: mvn deploy
+        id: create_release
+        uses: actions/create-release@latest
         env:
           GITHUB_TOKEN: ${{ github.token }} # GITHUB_TOKEN is the default env for the password
         with:
