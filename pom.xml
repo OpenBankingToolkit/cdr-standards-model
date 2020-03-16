@@ -144,10 +144,14 @@
             <url>https://jcenter.bintray.com/</url>
         </repository>
         <repository>
+            <id>central</id>
+            <url>https://maven.forgerock.org:443</url>
+        </repository>
+        <repository>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
-            <id>bintray-openbanking-toolkit-OpenBankingToolKit</id>
+            <id>bintray-OpenBankingToolKit</id>
             <name>bintray</name>
             <url>https://dl.bintray.com/openbanking-toolkit/OpenBankingToolKit</url>
         </repository>
