@@ -18,28 +18,17 @@ jobs:
           path: /home/runner/work/_temp/_github_home/.m2/repository
           key: ${{ runner.os }}-maven-mm-${{ hashFiles('**/pom.xml') }}
 
-      - name: Set up maven settings file with creds for Bintray
+      - name: Set up forgerock maven repository
         uses: actions/setup-java@v1
-        with:
-            java-version: '11'
-            architecture: x64
-            server-id: central
-            server-username: MAVEN_USERNAME
-            server-password: MAVEN_PASSWORD
+        with: # running setup-java again overwrites the settings.xml
+          java-version: '11'
+          architecture: x64
+          server-id: central # Value of the distributionManagement/repository/id field of the pom.xml
+          server-username: FR_ARTIFACTORY_USER
+          server-token: FR_ARTIFACTORY_CENTRAL_TOKEN
 
-      - name: Create Package
-        uses: benjefferies/create-bintray-package@master
-        with:
-          bintray-user: openbankingtoolkit
-          bintray-token: ${{ secrets.BINTRAY_API_KEY }}
-
-          owner: openbanking-toolkit
-          repo: OpenBankingToolKit
-
-          package-name: cdr-standards-model
-          package-description: Java CDR Data Model
-          package-url: https://github.com/OpenBankingToolkit/cdr-standards-model
-          package-license: Apache-2.0
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
 
       - name: Temporarily disable "include administrators" branch protection
         uses: benjefferies/branch-protection-bot@master
@@ -47,25 +36,17 @@ jobs:
         with:
           access-token: ${{ secrets.GH_ACCESS_TOKEN }}
           enforce_admins: false
-          
-      - name: Release
-        uses: bohocode/github-actions-maven-release@master
-        with:
-          gpg-enabled: "true"
-          gpg-key-id: ${{ secrets.FROPENBANKING_GPG_KEY_ID }}
-          gpg-key: ${{ secrets.FROPENBANKING_GPG_KEY }}
 
-          maven-local-repo-path: /github/home/.m2/repository
+      - name: Publish to github package maven
+        run: mvn deploy
+        env:
+          GITHUB_TOKEN: ${{ github.token }} # GITHUB_TOKEN is the default env for the password
 
-          maven-args: "-Dmaven.javadoc.skip=true -DskipTests -Ddockerfile.skip -DskipITs -DdockerCompose.skip"
-          maven-repo-server-id: bintray-openbankingtoolkit-OpenBankingToolkit
-          maven-repo-server-username: openbankingtoolkit
-          maven-repo-server-password: ${{ secrets.BINTRAY_API_KEY }}
-
-          git-release-bot-name: "fropenbanking"
-          git-release-bot-email: "obst@forgerock.com"
-
-          access-token: ${{ secrets.GH_ACCESS_TOKEN }}
+      - name: Publish to forgerock maven repository
+        run: maven deploy
+        env:
+          FR_ARTIFACTORY_USER: ${{ secrets.ARTIFACTORY_USERNAME }}
+          FR_ARTIFACTORY_CENTRAL_TOKEN: ${{ secrets.ARTIFACTORY_TOKEN }}
 
       - name: Enable "include administrators" branch protection
         uses: benjefferies/branch-protection-bot@master
