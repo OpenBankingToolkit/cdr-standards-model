@@ -13,17 +13,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v1
 
-      - name: Set up forgerock maven repository
+      - name: Set up java environment
         uses: actions/setup-java@v1
         with: # running setup-java
           java-version: '11'
           architecture: x64
 
-      - name: cache # prepare environment cache
+      - name: cache maven repository # prepare environment cache
         uses: actions/cache@v1
         id: prepare_cache
         with:
-          path: /home/runner/work/_temp/_github_home/.m2/repository
+          path: ${{ github.workspace }}/.m2/repository
           key: ${{ runner.os }}-maven-mm-${{ hashFiles('**/pom.xml') }}
 
       - name: prepare # prepare the artifact name output context
@@ -52,7 +52,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          upload_url: ${{ steps.create_github_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
           asset_path: target/${{ steps.prepare.outputs.artifact-id }}-${{ steps.prepare.outputs.artifact-version }}.jar # artifact-id and artifact-version output reference from 'prepare' step
           asset_name: ${{ steps.prepare.outputs.artifact-id }}-${{ steps.prepare.outputs.artifact-version }}.jar # artifact-id and artifact-version output reference from 'prepare' step
           asset_content_type: application/zip
