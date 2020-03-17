@@ -19,15 +19,19 @@ jobs:
           java-version: '11'
           architecture: x64
 
-      - name: prepare # prepare environment cache and artifact name output context
+      - name: cache # prepare environment cache
         uses: actions/cache@v1
-        id: prepare
+        id: prepare_cache
         with:
           path: /home/runner/work/_temp/_github_home/.m2/repository
           key: ${{ runner.os }}-maven-mm-${{ hashFiles('**/pom.xml') }}
+
+      - name: prepare # prepare the artifact name output context
+        id: prepare
         run: |
           echo "::set-output name=artifact-id::$(mvn help:evaluate -Dexpression=project.artifactId -q -DforceStdout)"
           echo "::set-output name=artifact-version::$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)"
+
       - name: Build project with Maven # build the project
         run: mvn -B clean verify --file pom.xml # this command executes each default lifecycle phase in order (validate, compile, test, package, etc), before executing verify.
 
