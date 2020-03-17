@@ -10,24 +10,17 @@ jobs:
         with:
           ref: ${{ github.ref }}
 
-      - name: cache maven repository # prepare environment cache
-        uses: actions/cache@v1
-        id: prepare_cache
-        with:
-          path: ${{ github.workspace }}/.m2/repository
-          key: ${{ runner.os }}-maven-mm-${{ hashFiles('**/pom.xml') }}
-
       - name: Set up forgerock maven repository
         uses: actions/setup-java@v1
         with: # running setup-java and overwrites the settings.xml
           java-version: '11'
           architecture: x64
           server-id: central # Value of the distributionManagement/repository/id field of the pom.xml
-          server-username: FR_ARTIFACTORY_USER
-          server-password: FR_ARTIFACTORY_CENTRAL_TOKEN
+          server-username: MAVEN_USERNAME # env variable for username in deploy
+          server-password: MAVEN_CENTRAL_TOKEN # env variable for token in deploy
 
       - name: Release package
         run:  mvn -B deploy
         env:
-          FR_ARTIFACTORY_USER: ${{ secrets.ARTIFACTORY_USERNAME }}
-          FR_ARTIFACTORY_CENTRAL_TOKEN: ${{ secrets.ARTIFACTORY_TOKEN }}
+          MAVEN_USERNAME: ${{ secrets.FR_ARTIFACTORY_USER }}
+          MAVEN_CENTRAL_TOKEN: ${{ secrets.FR_ARTIFACTORY_TOKEN }}

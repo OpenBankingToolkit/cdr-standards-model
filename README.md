@@ -3,8 +3,8 @@
 | |Current Status|
 |---|---|
 |Build|[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fopenbankingtoolkit%2Fcdr-standards-model%2Fbadge%3Fref%3Dmaster&style=flat)](https://actions-badge.atrox.dev/openbankingtoolkit/cdr-standards-model/goto?ref=master)|
-|Code coverage|[![codecov](https://codecov.io/gh/OpenBankingToolKit/cdr-standards-model/branch/master/graph/badge.svg)](https://codecov.io/gh/OpenBankingToolkit/cdr-standards-model)
-|Artifactory|[![Bintray](https://img.shields.io/bintray/v/openbanking-toolkit/OpenBankingToolKit/cdr-standards-model.svg)](https://bintray.com/openbanking-toolkit/OpenBankingToolKit/cdr-standards-model)|
+|Tag |[![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/openbankingtoolkit/cdr-standards-model)](https://github.com/OpenBankingToolKit/cdr-standards-model/tags)|
+|Release|[![GitHub release](https://img.shields.io/github/v/release/OpenBankingToolKit/cdr-standards-model?sort=semver)](https://github.com/OpenBankingToolKit/cdr-standards-model/releases)|
 |License|![license](https://img.shields.io/github/license/ACRA/acra.svg)|
 
 
