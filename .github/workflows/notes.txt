@@ -1,0 +1,28 @@
+      - name: Temporarily disable "include administrators" branch protection
+        uses: benjefferies/branch-protection-bot@master
+        if: always()
+        with:
+          access-token: ${{ github.token }}
+          enforce_admins: false
+
+- name: Set up forgerock maven repository
+        uses: actions/setup-java@v1
+        with: # running setup-java again overwrites the settings.xml
+          java-version: '11'
+          architecture: x64
+          server-id: central # Value of the distributionManagement/repository/id field of the pom.xml
+          server-username: FR_ARTIFACTORY_USER
+          server-password: FR_ARTIFACTORY_CENTRAL_TOKEN
+
+      - name: Publish to forgerock maven repository
+        run: mvn -B deploy
+        env:
+          FR_ARTIFACTORY_USER: ${{ secrets.ARTIFACTORY_USERNAME }}
+          FR_ARTIFACTORY_CENTRAL_TOKEN: ${{ secrets.ARTIFACTORY_TOKEN }}
+
+      - name: Enable "include administrators" branch protection
+        uses: benjefferies/branch-protection-bot@master
+        if: always()
+        with:
+          access-token: ${{ github.token }}
+          enforce_admins: true
