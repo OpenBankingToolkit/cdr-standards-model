@@ -45,6 +45,17 @@ jobs:
           draft: false
           prerelease: false
 
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          asset_path: ./target/*.jar
+          asset_name: ${{ steps.create_release.outputs.assets[0].name }}
+          asset_content_type: application/zip
+
       - name: Set up forgerock maven repository
         uses: actions/setup-java@v1
         with: # running setup-java again overwrites the settings.xml
@@ -52,7 +63,7 @@ jobs:
           architecture: x64
           server-id: central # Value of the distributionManagement/repository/id field of the pom.xml
           server-username: FR_ARTIFACTORY_USER
-          server-token: FR_ARTIFACTORY_CENTRAL_TOKEN
+          server-password: FR_ARTIFACTORY_CENTRAL_TOKEN
 
       - name: Publish to forgerock maven repository
         run: mvn deploy
