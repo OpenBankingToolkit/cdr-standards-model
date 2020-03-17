@@ -12,6 +12,12 @@ jobs:
     steps:
 
       - uses: actions/checkout@v1
+      
+      - name: Set up Java
+        uses: actions/setup-java@v1
+        with: # running setup-java
+          java-version: '11'
+          architecture: x64
 
       - uses: actions/cache@v1
         with:
@@ -20,12 +26,6 @@ jobs:
 
       - name: Build with Maven
         run: mvn -B package --file pom.xml
-
-      - name: Set up Java
-        uses: actions/setup-java@v1
-        with: # running setup-java
-          java-version: '11'
-          architecture: x64
           
       - name: Temporarily disable "include administrators" branch protection
         uses: benjefferies/branch-protection-bot@master
