@@ -36,6 +36,7 @@ jobs:
         run: mvn -B clean verify --file pom.xml # this command executes each default lifecycle phase in order (validate, compile, test, package, etc), before executing verify.
 
       - name: create github release
+        if: (!contains(github.ref, 'SNAPSHOT'))
         id: create_github_release
         uses: actions/create-release@latest
         env:
@@ -47,6 +48,7 @@ jobs:
           prerelease: false
 
       - name: Upload Release Asset
+        if: (!contains(github.ref, 'SNAPSHOT'))
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
         env:
