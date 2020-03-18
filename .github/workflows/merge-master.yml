@@ -19,13 +19,6 @@ jobs:
           java-version: '11'
           architecture: x64
 
-      - name: cache maven repository # prepare environment cache
-        uses: actions/cache@v1
-        id: prepare_cache
-        with:
-          path: ${{ github.workspace }}/.m2/repository
-          key: ${{ runner.os }}-maven-mm-${{ hashFiles('**/pom.xml') }}
-
       - name: prepare # prepare the artifact name output context
         id: prepare
         run: |
