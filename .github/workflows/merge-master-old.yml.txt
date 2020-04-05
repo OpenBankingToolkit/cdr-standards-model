@@ -1,0 +1,63 @@
+name: merge-master
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: create github release
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v1
+
+      - name: Set up java environment
+        uses: actions/setup-java@v1
+        with: # running setup-java
+          java-version: '11'
+          architecture: x64
+
+      - name: Cache Maven packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven2-${{ hashFiles('**/pom.xml') }}
+
+      - name: prepare # prepare the artifact name output context
+        id: prepare
+        run: |
+          echo "::set-output name=artifact-id::$(mvn help:evaluate -Dexpression=project.artifactId -q -DforceStdout)"
+          echo "::set-output name=artifact-version::$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)"
+
+      - name: Build project with Maven # build the project
+        run: mvn -B clean verify --file pom.xml # this command executes each default lifecycle phase in order (validate, compile, test, package, etc), before executing verify.
+
+      - name: create github release
+        if: (!contains(steps.prepare.outputs.artifact-version, 'SNAPSHOT'))
+        id: create_github_release
+        uses: actions/create-release@latest
+        env:
+          GITHUB_TOKEN: ${{ github.token }} # GITHUB_TOKEN is the default env for the password
+        with:
+          tag_name: v${{ steps.prepare.outputs.artifact-version }}
+          release_name: Release v${{ steps.prepare.outputs.artifact-version }}
+          draft: true # create the release unpublished, when it is published
+          prerelease: false
+
+      - name: Upload Release Asset
+        if: (!contains(steps.prepare.outputs.artifact-version, 'SNAPSHOT'))
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_github_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          asset_path: target/${{ steps.prepare.outputs.artifact-id }}-${{ steps.prepare.outputs.artifact-version }}.jar # artifact-id and artifact-version output reference from 'prepare' step
+          asset_name: ${{ steps.prepare.outputs.artifact-id }}-${{ steps.prepare.outputs.artifact-version }}.jar # artifact-id and artifact-version output reference from 'prepare' step
+          asset_content_type: application/zip
+
+      - uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_ACCESS_TOKEN }}
