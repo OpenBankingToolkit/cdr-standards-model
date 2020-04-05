@@ -5,11 +5,12 @@
 |Build|[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fopenbankingtoolkit%2Fcdr-standards-model%2Fbadge%3Fref%3Dmaster&style=flat)](https://actions-badge.atrox.dev/openbankingtoolkit/cdr-standards-model/goto?ref=master)|
 |Tag |[![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/openbankingtoolkit/cdr-standards-model)](https://github.com/OpenBankingToolKit/cdr-standards-model/tags)|
 |Release|[![GitHub release](https://img.shields.io/github/v/release/OpenBankingToolKit/cdr-standards-model?sort=semver)](https://github.com/OpenBankingToolKit/cdr-standards-model/releases)|
+|Code coverage|[![codecov](https://codecov.io/gh/OpenBankingToolkit/cdr-standards-model/branch/master/graph/badge.svg)](https://codecov.io/gh/OpenBankingToolkit/cdr-standards-model)|
 |License|![license](https://img.shields.io/github/license/ACRA/acra.svg)|
 
 
 # Consumer Data Right Standards Model
-A Java Consumer Data Right Standards Model, generated from the swagger, to help implementing the Consumer Data Right Standards: https://consumerdatastandardsaustralia.github.io/standards  .
+A Java Consumer Data Right Standards Model, generated from the swagger, to help implementing the Consumer Data Right Standards: https://consumerdatastandardsaustralia.github.io/standards.
 This project is compiled with JDK 11.
 
 ## Usage
@@ -17,6 +18,7 @@ This project is compiled with JDK 11.
 <dependency>
     <groupId>com.forgerock.cdr.standards</groupId>
     <artifactId>cdr-standards-model</artifactId>
+    <version>${cdr-standards-model.version}</version>
 </dependency>
 ```
 
